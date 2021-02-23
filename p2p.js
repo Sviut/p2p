@@ -16,7 +16,7 @@ function getRandomLine () {
 	return hashtagString
 }
 
-puppeteer.launch({ headless: true }).then(async browser => {
+puppeteer.launch({ args: ['--no-sandbox'] }, { headless: true }).then(async browser => {
 	console.log('Running script..')
 	const page = await browser.newPage()
 	const cookiesString = await fs.readFileSync('./p2p/cookies.json')
@@ -67,7 +67,7 @@ puppeteer.launch({ headless: true }).then(async browser => {
 	await publish.click()
 	console.log('Publich post')
 	await delay(10000)
-	await page.waitForFunction("document.querySelectorAll('publication')[0].querySelector('.status-1')", {timeout: 300000})
+	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.status-1\')', { timeout: 300000 })
 
 	console.log('Post posted - ok')
 	//
@@ -80,7 +80,7 @@ puppeteer.launch({ headless: true }).then(async browser => {
 	console.log('Work done!')
 })
 
-async function doComment(page) {
+async function doComment (page) {
 	console.log('Do commenting')
 	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.smile\')')
 	//
@@ -114,7 +114,6 @@ async function doComment(page) {
 
 	await delay(3000)
 
-
 	await page.evaluate(() => {
 			const publications = document.querySelectorAll('.c-comment-thread__item')
 			publications[0].querySelector('.sent').click()
@@ -135,9 +134,8 @@ async function doComment(page) {
 	await delay(5000)
 
 	console.log('Reload page')
-	await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+	await page.reload({ waitUntil: ['networkidle0', 'domcontentloaded'] })
 }
-
 
 function random_file () {
 	const files = fs.readdirSync('./p2p/posts')
