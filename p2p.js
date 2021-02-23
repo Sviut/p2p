@@ -16,8 +16,8 @@ function getRandomLine () {
 	return hashtagString
 }
 
-puppeteer.launch({ headless: false }).then(async browser => {
-	console.log('Running tests..')
+puppeteer.launch({ headless: true }).then(async browser => {
+	console.log('Running script..')
 	const page = await browser.newPage()
 	const cookiesString = await fs.readFileSync('./p2p/cookies.json')
 	const cookies = JSON.parse(cookiesString)
@@ -34,39 +34,54 @@ puppeteer.launch({ headless: false }).then(async browser => {
 
 	await page.goto('https://app.postmypost.io/ru/project/76791/publication')
 
+	console.log('open p2p')
 
 	await page.waitForSelector('.add-publication-button')
 	await page.evaluate(() => {
 		document.querySelector('.add-publication-button').querySelector('.pmp-btn-circle').click()
 	})
 
+	console.log('click add')
+
 	await page.waitForSelector('.attache')
 	await page.click('.attache')
 
 	const fileName = random_file()
+
+	console.log('add file')
 
 	const input = await page.$('input[type="file"]')
 	await input.uploadFile('./p2p/posts/' + fileName)
 
 	await page.waitForSelector('.pencil')
 
+	console.log('file uploaded')
+
 	fs.unlinkSync('./p2p/posts/' + fileName)
+
+	console.log('file deleted')
 
 	await delay(3000)
 
 	const [publish] = await page.$x('//button[contains(., \'Опубликовать\')]')
 	await publish.click()
+	console.log('Publich post')
 	await delay(10000)
 	await page.waitForFunction("document.querySelectorAll('publication')[0].querySelector('.status-1')", {timeout: 300000})
+
+	console.log('Post posted - ok')
 	//
 	// // //_________-
 	for (let i = 0; i < 4; i++) {
 		await doComment(page)
 	}
+
+	await browser.close()
+	console.log('Work done!')
 })
 
 async function doComment(page) {
-
+	console.log('Do commenting')
 	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.smile\')')
 	//
 	await delay(5000)
@@ -78,6 +93,8 @@ async function doComment(page) {
 			publications[0].querySelector('.sent').click()
 		},
 	)
+
+	console.log('send smile')
 
 	await delay(5000)
 	let text = getRandomLine()
@@ -93,6 +110,7 @@ async function doComment(page) {
 		}, text,
 	)
 
+	console.log('Paste tags')
 
 	await delay(3000)
 
@@ -103,6 +121,8 @@ async function doComment(page) {
 		},
 	)
 
+	console.log('Send tags')
+
 	await delay(5000)
 	await page.evaluate(() => {
 			const publications = document.querySelectorAll('.c-comment-thread__item')
@@ -110,8 +130,11 @@ async function doComment(page) {
 		},
 	)
 
+	console.log('Delete smile comment')
+
 	await delay(5000)
 
+	console.log('Reload page')
 	await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
 }
 
