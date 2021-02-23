@@ -111,6 +111,7 @@ async function doComment (page) {
 
 	let text = getRandomLine()
 
+	console.log('Paste tags')
 	await page.evaluate((text) => {
 			const publications = document.querySelectorAll('.c-comment-thread__item')
 			publications[0].querySelector('.c-comment-action__item--button').click()
@@ -122,26 +123,26 @@ async function doComment (page) {
 		}, text,
 	)
 
-	console.log('Paste tags')
 
 	await delay(5000)
 
+	console.log('Send tags')
 	await page.evaluate(() => {
 			const publications = document.querySelectorAll('.c-comment-thread__item')
 			publications[0].querySelector('.sent').click()
 		},
 	)
 
-	console.log('Send tags')
 
 	await delay(10000)
+
+	console.log('Delete smile comment')
 	await page.evaluate(() => {
 			const publications = document.querySelectorAll('.c-comment-thread__item')
 			publications[0].querySelectorAll('.c-comment-layout__delete-button')[0].click()
 		},
 	)
 
-	console.log('Delete smile comment')
 
 	await delay(5000)
 
