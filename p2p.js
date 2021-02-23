@@ -147,6 +147,6 @@ async function doComment (page) {
 
 function random_file () {
 	const folder = getPublicFolder()
-	const files = fs.readdirSync('./p2p/' + folder)
+	const files = fs.readdirSync('./p2p/' + folder + '/')
 	return files[Math.floor(Math.random() * files.length)]
 }
