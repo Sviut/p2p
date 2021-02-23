@@ -4,7 +4,7 @@ const delay = require('delay')
 
 const PUBLIC_NAMES = ['artmemescentral', 'funnyvideos', 'recovery_sort_of', 'sendmemes']
 
-function getPublicFolder() {
+function getPublicFolder () {
 	return PUBLIC_NAMES[Math.floor(Math.random() * PUBLIC_NAMES.length)]
 }
 
@@ -105,10 +105,13 @@ async function doComment (page) {
 
 	console.log('send smile')
 
-	await delay(10000)
+	await delay(5000)
+
+	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.c-comment-action__item--button\')')
+
 	let text = getRandomLine()
 
-	const cors = await page.evaluate((text) => {
+	await page.evaluate((text) => {
 			const publications = document.querySelectorAll('.c-comment-thread__item')
 			publications[0].querySelector('.c-comment-action__item--button').click()
 
