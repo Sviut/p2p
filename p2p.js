@@ -82,9 +82,11 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: true }).then(async brow
 
 async function doComment (page) {
 	console.log('Do commenting')
+	await delay(10000)
+
 	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.smile\')')
 	//
-	await delay(5000)
+	await delay(10000)
 
 	await page.evaluate(() => {
 			const publications = document.querySelectorAll('publication')
@@ -96,7 +98,7 @@ async function doComment (page) {
 
 	console.log('send smile')
 
-	await delay(5000)
+	await delay(10000)
 	let text = getRandomLine()
 
 	const cors = await page.evaluate((text) => {
@@ -106,13 +108,13 @@ async function doComment (page) {
 			setTimeout(() => {
 				publications[0].querySelector('.c-message-form__message').innerText = text
 				publications[0].querySelector('.c-comment-action__item--button').click()
-			}, 2000)
+			}, 1000)
 		}, text,
 	)
 
 	console.log('Paste tags')
 
-	await delay(3000)
+	await delay(5000)
 
 	await page.evaluate(() => {
 			const publications = document.querySelectorAll('.c-comment-thread__item')
@@ -122,7 +124,7 @@ async function doComment (page) {
 
 	console.log('Send tags')
 
-	await delay(5000)
+	await delay(10000)
 	await page.evaluate(() => {
 			const publications = document.querySelectorAll('.c-comment-thread__item')
 			publications[0].querySelectorAll('.c-comment-layout__delete-button')[0].click()
