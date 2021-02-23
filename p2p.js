@@ -2,6 +2,12 @@ const fs = require('fs')
 const puppeteer = require('puppeteer')
 const delay = require('delay')
 
+const PUBLIC_NAMES = ['artmemescentral', 'funnyvideos', 'recovery_sort_of', 'sendmemes']
+
+function getPublicFolder() {
+	return PUBLIC_NAMES[Math.floor(Math.random() * PUBLIC_NAMES.length)]
+}
+
 function getRandomLine () {
 	const data = fs.readFileSync('./rankedHashtags.txt', 'utf8')
 	const splitData = data.split('\n')
@@ -140,6 +146,6 @@ async function doComment (page) {
 }
 
 function random_file () {
-	const files = fs.readdirSync('./p2p/posts')
+	const files = fs.readdirSync(`./p2p/${getPublicFolder}`)
 	return files[Math.floor(Math.random() * files.length)]
 }
