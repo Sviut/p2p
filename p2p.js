@@ -58,13 +58,13 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: true }).then(async brow
 	console.log('add file')
 
 	const input = await page.$('input[type="file"]')
-	await input.uploadFile(`./p2p/posts/${folder}/${fileName}`)
+	await input.uploadFile(`./p2p/${folder}/${fileName}`)
 
 	await page.waitForSelector('.pencil')
 
 	console.log('file uploaded')
 
-	fs.unlinkSync(`./p2p/posts/${folder}/${fileName}`)
+	fs.unlinkSync(`./p2p/${folder}/${fileName}`)
 
 	console.log('file deleted')
 
