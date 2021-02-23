@@ -52,18 +52,19 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: true }).then(async brow
 	await page.waitForSelector('.attache')
 	await page.click('.attache')
 
-	const fileName = random_file()
+	const folder = getPublicFolder()
+	const fileName = random_file(folder)
 
 	console.log('add file')
 
 	const input = await page.$('input[type="file"]')
-	await input.uploadFile('./p2p/posts/' + fileName)
+	await input.uploadFile(`./p2p/posts/${folder}/${fileName}`)
 
 	await page.waitForSelector('.pencil')
 
 	console.log('file uploaded')
 
-	fs.unlinkSync('./p2p/posts/' + fileName)
+	fs.unlinkSync(`./p2p/posts/${folder}/${fileName}`)
 
 	console.log('file deleted')
 
@@ -145,8 +146,7 @@ async function doComment (page) {
 	await page.reload({ waitUntil: ['networkidle0', 'domcontentloaded'] })
 }
 
-function random_file () {
-	const folder = getPublicFolder()
+function random_file (folder) {
 	const files = fs.readdirSync('./p2p/' + folder + '/')
 	return files[Math.floor(Math.random() * files.length)]
 }
