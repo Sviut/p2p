@@ -74,7 +74,7 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: true }).then(async brow
 	await publish.click()
 	console.log('Publich post')
 	await delay(10000)
-	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.status-1\')', { timeout: 300000 })
+	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.status-1\')', { timeout: 600000 })
 
 	console.log('Post posted - ok')
 	//
