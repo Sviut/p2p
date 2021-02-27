@@ -101,7 +101,7 @@ async function doComment (page) {
 	console.log('Do commenting')
 	await delay(10000)
 
-	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.smile\')')
+	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.smile\')', { timeout: 120000 })
 	//
 	await delay(10000)
 
