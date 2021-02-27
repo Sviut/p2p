@@ -22,7 +22,7 @@ function getRandomLine () {
 	return hashtagString
 }
 
-puppeteer.launch({ args: ['--no-sandbox'] }, { headless: true }).then(async browser => {
+puppeteer.launch({ args: ['--no-sandbox'] }, { headless: false }).then(async browser => {
 	console.log('Running script..')
 	const page = await browser.newPage()
 	const cookiesString = await fs.readFileSync('./p2p/cookies.json')
@@ -67,6 +67,7 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: true }).then(async brow
 	fs.unlinkSync(`./p2p/${folder}/${fileName}`)
 
 	console.log('file deleted')
+	document.querySelector('[title="Что у вас нового?"]').innerText = '1, 2 or 3?'
 
 	await delay(3000)
 
