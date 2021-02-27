@@ -2,7 +2,7 @@ const fs = require('fs')
 const puppeteer = require('puppeteer')
 const delay = require('delay')
 
-const PUBLIC_NAMES = ['artmemescentral', 'funnyvideos', 'recovery_sort_of', 'sendmemes']
+const PUBLIC_NAMES = ['modeblog']
 
 function getPublicFolder () {
 	return PUBLIC_NAMES[Math.floor(Math.random() * PUBLIC_NAMES.length)]
@@ -85,6 +85,9 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: true }).then(async brow
 
 	await browser.close()
 	console.log('Work done!')
+}).catch(e => {
+	console.log(e)
+	process.exit(0)
 })
 
 async function doComment (page) {
