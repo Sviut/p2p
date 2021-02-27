@@ -50,6 +50,11 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: false }).then(async bro
 	console.log('click add')
 
 	await page.waitForSelector('.attache')
+
+	await page.evaluate(() => {
+		document.querySelector('[title="Что у вас нового?"]').innerText = '1, 2 or 3?'
+	})
+
 	await page.click('.attache')
 
 	const folder = getPublicFolder()
@@ -61,9 +66,6 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: false }).then(async bro
 	const input = await page.$('input[type="file"]')
 	await input.uploadFile(`./p2p/${folder}/${fileName}`)
 
-	await page.evaluate(() => {
-		document.querySelector('[title="Что у вас нового?"]').innerText = '1, 2 or 3?'
-	})
 
 	await page.waitForSelector('.pencil')
 
