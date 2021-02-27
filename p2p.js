@@ -57,6 +57,8 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: false }).then(async bro
 
 	console.log('add file')
 
+	document.querySelector('[title="Что у вас нового?"]').innerText = '1, 2 or 3?'
+
 	const input = await page.$('input[type="file"]')
 	await input.uploadFile(`./p2p/${folder}/${fileName}`)
 
@@ -67,7 +69,6 @@ puppeteer.launch({ args: ['--no-sandbox'] }, { headless: false }).then(async bro
 	fs.unlinkSync(`./p2p/${folder}/${fileName}`)
 
 	console.log('file deleted')
-	document.querySelector('[title="Что у вас нового?"]').innerText = '1, 2 or 3?'
 
 	await delay(3000)
 
