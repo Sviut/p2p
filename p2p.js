@@ -117,7 +117,7 @@ async function doComment (page) {
 
 	await delay(5000)
 
-	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.c-comment-action__item--button\')')
+	await page.waitForFunction('document.querySelectorAll(\'publication\')[0].querySelector(\'.c-comment-action__item--button\')', { timeout: 120000 })
 
 	let text = getRandomLine()
 
@@ -157,7 +157,7 @@ async function doComment (page) {
 	await delay(5000)
 
 	console.log('Reload page')
-	await page.reload({ waitUntil: ['networkidle0', 'domcontentloaded'] })
+	await page.reload({ waitUntil: ['networkidle0', 'domcontentloaded'] }, { timeout: 180000 })
 }
 
 function random_file (folder) {
